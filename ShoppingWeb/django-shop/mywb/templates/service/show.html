@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <style>
+      .main{
+          margin: auto 0;
+      }
+      .main p {
+          font-size: 20px;
+          margin-top: 20px;
+      }
+    </style>
+ <div style="margin: auto 0" class="main">
+ <p>服务项目</p>
+     <img style="width: 300px;" src="/static/images/p3.jpeg ">
+<p>服务名称:{{ cx.title }}</p>
+ <p>具体内容:{{ cx.content }}</p>
+ <p>价格:{{ cx.price }}</p>
+ <p>活动状态:{{ cx.status }}</p>
+
+
+ </div>
+{#    <button class="btn btn-warning" onclick="joincx({{ cx.id }})">我要参见</button>#}
+
+    <script>
+      function joincx(id){
+        console.log(id)
+          $.post("/joincx/",{"id":id},function (data){
+              alert("参加成功")
+          })
+
+      }
+    </script>
+{% endblock %}

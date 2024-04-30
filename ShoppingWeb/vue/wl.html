@@ -1,0 +1,157 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-01-04 17:52:31
+ * @LastEditTime: 2024-01-07 16:45:03
+ * @LastEditors: lyq
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+     <style>
+
+       /* 时间轴容器 */
+    .timeline-container {
+      position: relative;
+      width: 300px; /* 根据需要调整宽度 */
+      margin: 50px auto;
+    }
+
+    /* 竖线 */
+    .timeline-line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: #ccc;
+      margin-left: -1px; /* 中心对齐 */
+    }
+
+    /* 时间轴点 */
+    .timeline-point {
+      position: relative;
+      width: 50px;
+      height: 50px;
+      background-color: #fff;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #333;
+      border: 2px solid #ccc;
+      margin-left: 30px;
+      z-index: 1;
+    }
+
+    /* 时间轴内容 */
+    .timeline-content {
+      position: relative;
+      width: calc(100% - 80px); /* 减去圆点和间距 */
+      margin-left: 70px;
+      background-color: #f9f9f9;
+      padding: 1rem;
+      border-radius: 4px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+    }
+
+    .timeline-point::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: -20px;
+      transform: translateY(-50%);
+      border-top: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      border-right: 10px solid #ccc;
+    }
+
+    /* 每个时间节点 */
+    .timeline-item {
+      position: relative;
+    }
+
+
+     </style>
+</head>
+<body>
+    
+    <div id="app">
+        <div id="header"></div>
+        <div id="main">
+  
+<div class="timeline-container">
+    <div class="timeline-line"></div>
+    
+    <div class="timeline-item" v-for="(item,index) in ls">
+      <div class="timeline-point">{{index+1}}</div>
+      <div class="timeline-content">
+        <h3>{{item.point}}</h3>
+        <p>{{item.address}}</p>
+        <p>{{item.buss}}</p>
+        <p><time datetime="2024-01-01T08:00">{{item.createtime}}</time></p>
+      </div>
+    </div>
+  
+
+    
+  </div>
+             
+
+            
+        </div>
+        <div id="footer">
+
+        </div>
+  
+    </div>
+    <script>
+            $(function () {
+                $.get('header.html', function (data) {
+                    $("#header").html(data)
+                })
+                $.get('footer.html', function (data) {
+                    $("#footer").html(data)
+                })
+            })
+        </script>
+
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+
+         ls:[]
+
+        },
+        mounted() {
+        console.log("页面怪哉")
+        this.loadwl()
+
+      },
+        methods:{
+            loadwl(){
+                console.log("执行页面怪哉")
+                var id = location.search.split('=')[1];
+                var url="http://localhost:8888/syslogistics/bylsh?ls="+id;
+                axios.get(url).then(res=>{
+                    this.ls=res.data.data;
+                }).catch(err=>{
+                    console.log(err);
+                })
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

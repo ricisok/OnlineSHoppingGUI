@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script crossorigin="anonymous" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" src="https://lib.baomitu.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+<p>代码生成器</p>
+<input placeholder="请输入模块名称" id="model">
+<button id="btn">生成字典</button>
+<div id="result">
+<textarea id="show" cols="100" rows="30">
+
+</textarea>
+</div>
+</body>
+<script>
+    $(function (){
+
+
+
+        $("#btn").click(function (){
+
+            var md=$("#model").val();
+
+            $.ajax({
+                url: "/codegenerator/",
+                type: "post",
+                dataType: "json",
+                data: {"model":md},
+                success: function (data) {
+                    console.log(data.data);
+                    $("#show").val(JSON.stringify(data.data));
+
+                }
+            })
+        })
+    })
+</script>
+
+</html>

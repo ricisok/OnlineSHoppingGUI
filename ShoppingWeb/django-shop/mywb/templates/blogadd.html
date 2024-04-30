@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+     <style>
+        .myform {
+            display: flex;
+            flex-direction: column;
+            {#justify-content: center;#}
+            {#align-items: center;#}
+            margin-top: 300px;
+            width: 60%;
+
+        }
+        .form-groups{
+            display: flex;
+            flex-direction: row;
+            {#align-items: center;#}
+            margin-bottom: 20px;
+        }
+        .form-groups span{
+            width: 100px;
+            font-weight: bold;
+            font-size: larger;
+        }
+
+    </style>
+ <div>
+
+     <div class="myform">
+         <form method="post" action="/uploadimg/" enctype="multipart/form-data">
+         <div class="form-groups">
+             <span>标题</span>
+             <input type="text" name="name" id="name" placeholder="标题"  class="form-control" required>
+         </div>
+
+         <div class="form-groups">
+             <span>分类</span>
+           <select class="form-control" name="category" id="category">
+
+           </select>
+         </div>
+          <div class="form-groups">
+             <span>封面图片</span>
+            <input type="file" name="image" />
+
+         </div>
+
+          <div class="form-groups">
+             <span>内容</span>
+            <textarea name="content" class="form-control" cols="50" rows="10"></textarea>
+         </div>
+             <div class="form-groups" style="float: right;">
+                   <button type="submit" style="width: 150px;"  class="btn btn-success" >上传</button>
+             </div>
+     </form>
+     </div>
+
+ </div>
+    <script>
+      $(function (){
+          loadcategory()
+
+
+
+      })
+
+      function loadcategory() {
+          $.ajax({
+              url: "/category/",
+              type: "get",
+              dataType: "json",
+              success: function (data) {
+
+                  ds=data.data
+                  console.log(ds.length)
+                  var html = "";
+                  for (var i = 0; i < ds.length; i++) {
+                      html += "<option>" + ds[i].name + "</option>"
+                  }
+                  console.log(html)
+                  $("#category").append(html)
+              }
+          })
+      }
+    </script>
+{% endblock %}

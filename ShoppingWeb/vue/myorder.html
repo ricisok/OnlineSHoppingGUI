@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/shopping.css" />
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <style>
+    .pay{
+        display: flex;
+        flex-direction: row;
+        width: 50%;
+        margin: 0 auto;
+        flex-wrap: wrap;
+    }
+    .pay-item{
+        display: flex;
+        flex-direction: row;
+        margin: 20px;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 0 15px #675b5b;
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="box" id="header">
+
+  </div>
+  <div id="app">
+    <div class="top">
+      <p class="all">我的订单</p>
+      <div class="list">
+        <p class="list_name">配送至：{{user.addess}}</p>
+       
+      </div>
+    </div>
+    <!--  商品信息 -->
+    <div class="information">
+      <div class="information_top">
+        <ul class="information_top_list">
+          <!-- <li class="item">
+            <input class="checkbox" type="checkbox" />
+            <p>全选</p>
+          </li> -->
+          <li class="item">商品</li>
+          <li class="item">单价</li>
+          <li class="item">数量</li>
+          <li class="item">小计</li>
+          <li class="item">下单时间</li>
+     
+
+        </ul>
+      </div>
+      <div class="information_content">
+        <ul class="information_content_list" v-for="(item,index) in orders" :key="item.pk">
+          <!-- <li class="content_item">
+            <input type="checkbox" /><img class="content_img" :src="item.img" />
+          </li> -->
+
+          <li class="content_item_text">
+            {{item.fields.goodsname}}
+          </li>
+          <li class="content_item"><span>¥ </span>{{item.fields.goodsprice}}</li>
+          <li class="content_item_btn">
+            <div class="btn">
+         
+              <p class="text">{{item.fields.goodsnum}}</p>
+       
+            </div>
+          </li>
+          <li class="content_item"><span>¥ </span>{{item.fields.total}}</li>
+          <li class="content_item">2024</li>
+          <!-- <li class="content_item"><a :href="['wl.html?ls='+item.remark]">查看物流</a></li>
+          -->
+        </ul>
+
+      </div>
+      <div class="information_bottom">
+        <div class="information_bottom_left">
+          <!-- <div class="left_item">
+            <input class="checkbox" type="checkbox" />
+            <p>全选</p>
+          </div> -->
+          <!-- <a class="s" href="">删除</a>
+          <a class="s" href="">移到我的关注</a> -->
+        </div>
+        
+        <div class="information_bottom_right" v-if="false">
+          <p>共计{{totalnum}}件商品</p>
+          <div>
+            <p>总价：￥{{totalprice}}</p>
+            <!-- <p>促销：￥00.00</p> -->
+          </div>
+          <!-- <button class="information_btn" @click="topay">去结算</button> -->
+        </div>
+
+         
+
+      </div>
+  
+
+     <!-- <button class="information_btn" style="float: right;margin-right: 450px;" @click="topay">提交订单</button> -->
+    </div>
+  </div>
+  </div>
+
+  <script>
+    $(function () {
+      $.get('header.html', function (data) {
+        $("#header").html(data)
+      })
+      $.get('footer.html', function (data) {
+        $("#footer").html(data)
+      })
+    })
+  </script>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title: "测试",
+        orders: [],
+        goods: [],
+        total: 0,
+        money: 0,
+        user: {},
+
+
+
+      },
+      
+      computed: {
+        totalprice: function () {
+          let total = 0;
+          this.orders.forEach(item => {
+            total += item.price * item.number;
+          });
+          this.money = total;
+          return total.toFixed(2);
+
+        },
+        totalnum: function () {
+
+          let total = 0;
+          this.orders.forEach(item => {
+            total += item.number;
+          });
+          this.total = total;
+          return total;
+
+        }
+
+
+      },
+      mounted() {
+
+        let user = localStorage.getItem("user");
+          if (user) {
+            this.user = JSON.parse(user)
+       
+         
+               
+          } else {
+            location.href = "login.html"
+          }
+
+
+        this.loadorder();
+         
+
+      },
+
+      //计算属性 计算总价和总数
+
+    
+      
+      methods: {
+        loadorder() {
+          //获取购物车内的商品列表
+          axios.post('http://localhost:8000/getorder/',{userid:this.user.username}).then(res=>{
+             console.log(res.data);
+             this.orders=JSON.parse(res.data.data);
+             console.log(this.orders,"order");
+           })
+
+
+
+          }
+        }
+
+        
+    });
+  </script>
+
+
+  <!-- 底部栏 -->
+  <div id="footer"></div>
+
+
+
+</body>
+
+</html>

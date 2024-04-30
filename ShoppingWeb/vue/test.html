@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Font Change</title>
+  <style>
+    /* 定义一个CSS类 */
+    .custom-font {
+      font-family: 'Arial', sans-serif;
+      font-size: 24px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <p id="myElement">This is a paragraph that will have its font changed.</p>
+  <button id="changeFont">Change Font</button>
+
+  <script>
+    // 获取元素和按钮
+    var element = document.getElementById('myElement');
+    var button = document.getElementById('changeFont');
+
+    // 为按钮添加点击事件处理程序
+    button.addEventListener('click', function() {
+      // 添加自定义字体类
+      element.classList.toggle('custom-font');
+    });
+  </script>
+
+</body>
+</html>

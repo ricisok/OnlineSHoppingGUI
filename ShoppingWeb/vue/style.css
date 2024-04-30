@@ -1,0 +1,73 @@
+/* 重置浏览器默认样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 设置导航栏样式 */
+.navbar {
+    background-color: #333;
+    overflow: hidden;
+}
+
+/* 设置导航栏logo样式 */
+.nav-logo {
+    float: left;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* 设置导航栏菜单样式 */
+.nav-menu {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+/* 设置导航栏菜单项样式 */
+.nav-item {
+    float: left;
+}
+
+/* 设置导航栏菜单链接样式 */
+.nav-link {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+/* 设置导航栏菜单链接悬停样式 */
+.nav-link:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* 设置导航栏子菜单样式 */
+.nav-submenu {
+    display: none;
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    min-width: 160px;
+    background-color: #333;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+/* 设置导航栏子菜单项样式 */
+.nav-subitem {
+    float: none;
+}
+
+/* 设置导航栏子菜单链接样式 */
+.nav-sublink {
+      display: block;
+}
+  

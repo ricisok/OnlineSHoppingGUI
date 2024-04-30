@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>图片上传与预览</title>
+    <style>
+        .preview-container {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <input type="file" name="imageFile" id="file-input" accept="image/*">
+    <div class="preview-container" id="preview"></div>
+    <button type="submit">上传图片</button>
+</form>
+
+<script>
+$(document).ready(function () {
+    // 图片预览
+    $('#file-input').on('change', function () {
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#preview').css('background-image', 'url("' + e.target.result + '")');
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+
+    // 表单提交事件，使用 AJAX 进行文件上传
+    $('#uploadForm').submit(function (event) {
+        event.preventDefault(); // 阻止表单默认提交
+
+        var formData = new FormData(this);
+        var fileInput = document.getElementById('file-input');
+        var files = fileInput.files;
+
+        if (files.length > 0) {
+            $.ajax({
+                url: '/api/upload/image', // 替换为你的服务器端处理图片上传的API地址
+                type: 'POST',
+                data: formData,
+                processData: false, // 必须设置为false以正确传输二进制数据
+                contentType: false, // 必须设置为false，让jQuery不要去处理Content-Type
+                success: function (response) {
+                    console.log('图片上传成功:', response);
+                    alert('图片已成功上传至服务器!');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('图片上传失败:', textStatus, ', 错误:', errorThrown);
+                    alert('图片上传过程中发生错误，请重试!');
+                }
+            });
+        } else {
+            alert('请选择要上传的图片!');
+        }
+    });
+});
+</script>
+
+</body>
+</html>

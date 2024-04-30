@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <style>
+
+        /* 全局样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #9e9898;
+            color: #fff;
+        }
+
+        .menu {
+            list-style-type: none;
+            padding: 20px;
+        }
+
+        .menu li {
+            margin-bottom: 10px;
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+        }
+
+        .menu a:hover {
+            background-color: #444;
+        }
+
+        .content {
+            flex: 1;
+            background-color: #fff;
+        }
+
+        iframe {
+            width: 100%;
+            height: calc(100% - 60px);
+            border: none;
+        }
+
+    </style>
+    <div class="container">
+        <div class="sidebar">
+            <ul class="menu">
+                <li><a href="/myinfo">我的信息</a></li>
+
+                <li><a href="/cxlist">我参加的促销</a></li>
+{#                <li><a href="#payment">我的促销</a></li>#}
+
+            </ul>
+        </div>
+        <div class="content">
+            <iframe src="/myinfo" frameborder="0" name="mainFrame"></iframe>
+        </div>
+    </div>
+<script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const menuLinks = document.querySelectorAll('.menu li');
+
+    menuLinks.forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault(); // 阻止默认的链接跳转行为
+
+            const url = this.querySelector('a').getAttribute('href');
+            const iframe = document.querySelector('iframe');
+
+            iframe.src = url; // 将菜单URL赋值给iframe的src属性
+        });
+    });
+});
+
+</script>
+{% endblock %}
