@@ -1,0 +1,17 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<style>
+ .doc{
+     display: flex;
+     flex-direction: column;
+     justify-content: center;
+     align-items: center;
+ }
+</style>
+ <div class="doc">
+     <p style="text-align: center;font-size: larger;font-weight: bold">{{ doc.name }}</p>
+     <img src="/media/{{ doc.image }}">
+     <div style="margin-top: 50px;font-size: 18px;text-align: left;">{{ doc.content }}</div>
+ </div>
+{% endblock %}

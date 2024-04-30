@@ -1,0 +1,73 @@
+{% extends 'layout_simgle1.html' %}
+
+{% block content %}
+    <div>
+        <h3>我参加的促销活动</h3>
+
+        <div class="table-responsive" style="margin-top: 50px;">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+
+                    <th></th>
+
+                    <th>ID</th>
+
+
+                    <th>用户</th>
+
+
+                    <th>促销名称</th>
+
+
+                    <th>开始时间</th>
+
+
+                    <th>活动状态</th>
+
+
+                </tr>
+                </thead>
+                <tbody>
+                {% for item in list %}
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" checked class="i-checks" name="input[]">
+                        </td>
+
+                        <td>{{ item.id }}</td>
+
+                        <td>{{ item.name }}</td>
+
+                        <td>{{ item.cxname }}</td>
+
+                        <td>{{ item.cxstarttime }}</td>
+
+                        <td>{{ item.status }}</td>
+
+
+                        <td>&nbsp;&nbsp;<a href="javascript:;" onclick="gotodel({{ item.id }})" class="btn btn-danger">退出活动</a>
+                    </tr>
+                {% endfor %}
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+         function gotodel(id){
+             var confirmation = window.confirm("您确定要删除吗?");
+
+            if (confirmation) {
+                // 用户点击了"确定"按钮，执行删除操作
+             window.location.href="/cxlistdel?id="+id;
+                // 这里可以添加实际的删除操作代码，如通过Ajax向服务器发送请求等
+            } else {
+                // 用户点击了"取消"按钮，不执行删除操作
+                console.log("Delete operation cancelled.");
+            }
+        }
+    </script>
+{% endblock %}
