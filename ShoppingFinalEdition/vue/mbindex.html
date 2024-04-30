@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="./iconfont.js"></script>
+    <style>
+        .icon {
+            width: 3em;
+            height: 3em;
+            vertical-align: -0.15em;
+            fill: currentColor;
+            overflow: hidden;
+        }
+
+        .grid-container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .grid-item {
+            width: 20%;
+            border: 1px solid #a7a4a4;
+            border-radius: 15px;
+            margin: 10px;
+            text-align: center;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 10px;
+            box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .grid-item img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .news-list-mb{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: 1px solid #a7a4a4;
+            border-radius: 5px;
+            padding: 10px ;
+            margin-top: 5px;
+            height: 100px;
+     
+        }
+        .news-list-mb img{
+            width: 80px;
+            height: 80px;
+       
+        }
+        .news-list-mb-right{
+            display: flex;
+            flex-direction: column;
+            margin-left: 15px;
+            justify-content: center;
+         
+   
+        }
+
+      
+    </style>
+</head>
+
+<body>
+
+    <div class="grid-container">
+        <div class="grid-item" onclick="location.href='#home'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-guanyuwomen
+                "></use>
+              </svg>
+            关于我们
+        </div>
+        <div class="grid-item" onclick="location.href='#products'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-qiyezixun"></use>
+              </svg>
+            企业资讯
+        </div>
+        <div class="grid-item" onclick="location.href='#services'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-yewulingyu"></use>
+              </svg>
+            业务领域
+        </div>
+        <div class="grid-item" onclick="location.href='#home'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-kejichuangxin"></use>
+              </svg>
+            科技创新
+        </div>
+        <div class="grid-item" onclick="location.href='#products'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-a-ziyuan20"></use>
+              </svg>
+            党群活动
+        </div>
+        <div class="grid-item" onclick="location.href='#services'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-bumenjiancha"></use>
+              </svg>
+            人力资源
+        </div>
+
+        <!-- <div class="grid-item" onclick="location.href='#home'">
+            <svg class="icon" aria-hidden="true">
+                <use xlink:href="#icon-lianxiwomen"></use>
+              </svg>
+            联系我们
+        </div> -->
+
+    </div>
+    <div class="news-mb">
+        <div class="news-list-mb">
+            <img src="./images/bg_03.png" alt="" >
+             <div class="news-list-mb-right">
+                <h3>企业资讯企业资讯企业资讯企业资讯企业资讯企业资讯</h3>
+                <p>2022-03-15</p>
+             </div>
+        </div>
+    </div>
+   
+    
+    
+</body>
+
+</html>

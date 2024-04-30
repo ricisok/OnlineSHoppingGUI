@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/detail.css" />
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <style>
+
+  </style>
+</head>
+
+<body>
+  <div id="header"></div>
+  <!-- 商品介绍 -->
+  <div id="app" class="de_container w">
+    <!-- 产品介绍模块 -->
+    <div class="product_intro clearfix">
+      <!-- 预览区域 -->
+      <div class="preview_wrap">
+        <div class="prew_img">
+          <img :src="goods.fields.image" alt="" />
+        </div>
+        <div class="prew_list">
+          <!-- <a href="javascript:;" class="arrow_prev"></a>
+            <a href="javascript:;" class="arrow_next"></a>
+            <ul class="list_item">
+              <li><img src="images/pre.jpg" alt="" /></li>
+              <li class="current"><img src="images/pre.jpg" alt="" /></li>
+              <li><img src="images/pre.jpg" alt="" /></li>
+              <li><img src="images/pre.jpg" alt="" /></li>
+              <li><img src="images/pre.jpg" alt="" /></li>
+            </ul> -->
+        </div>
+        <div class="prew_mess">
+          <ul>
+            <!-- <li>商品编号：0468256644</li>
+              <li><img src="images/prew-share.png" alt="" /> 分享</li>
+              <li><img src="images/prew-focus.png" alt="" /> 关注 5000</li>
+              <li><input type="checkbox" />对比</li> -->
+          </ul>
+        </div>
+      </div>
+      <!-- 产品详细信息 -->
+      <div class="iteminfo_wrap">
+        <div class="sku_name">
+          {{goods.fields.name}}
+        </div>
+        <!-- <div class="news">
+            推荐选择下方[移动优惠购],手机套餐齐搞定,不用换号,每月还有花费返
+          </div> -->
+        <div class="summary">
+          <dl class="summary_price">
+            <dt>价格</dt>
+            <dd>
+              <i class="price">￥{{goods.fields.price}}</i>
+              <a href="#">降价通知</a>
+              <div class="remark">累计评价618</div>
+            </dd>
+          </dl>
+         
+        
+          <dl class="summary_stock">
+            <dt>配送至</dt>
+            <dd>
+              澳门科技大学 <a href="#"></a> 有货 支持 免运费 |货到付款
+              |211限时达
+              <a href="#"></a>
+              由自营发货，并提供售后服务。11:00前完成下单，预计今天（08月10日）送达
+            </dd>
+          </dl>
+          <!-- <dl class="choose_color">
+              <dt>选择颜色</dt>
+              <dd>
+                <a href="javascript:;" class="current">玫瑰金</a>
+                <a href="javascript:;">金色</a>
+                <a href="javascript:;">白色</a>
+                <a href="javascript:;">土豪色</a>
+              </dd>
+            </dl>
+            <dl class="choose_version">
+              <dt>选择版本</dt>
+              <dd>
+                <a href="javascript:;">公开版</a>
+                <a href="javascript:;" class="current">移动4G</a>
+              </dd>
+            </dl>
+            <dl class="choose_version">
+              <dt>选择容量</dt>
+              <dd>
+                <a href="javascript:;">16GB</a>
+                <a href="javascript:;">64GB</a>
+                <a href="javascript:;" class="current">移动4G</a>
+              </dd>
+            </dl>
+            <dl class="choose_version">
+              <dt>购买方式</dt>
+              <dd>
+                <a href="javascript:;">官方标配</a>
+                <a href="javascript:;" class="current">移动优惠购</a>
+                <a href="javascript:;">电信优惠购</a>
+              </dd>
+            </dl>
+            <dl class="choose_version">
+              <dt>套装</dt>
+              <dd>
+                <a href="javascript:;">保护套装</a>
+                <a href="javascript:;" class="current">充电套装</a>
+              </dd>
+            </dl> -->
+          <div class="choose_btns">
+            <div class="choose_amount">
+              <input type="text" value="1" />
+              <a href="javascript:;" class="add">+</a>
+              <a href="javascript:;" class="reduce">-</a>
+            </div>
+            <a href="javascript:;" class="addcar" @click="addcart">加入购物车</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 产品细节模块 -->
+    <div class="product_detail clearfix">
+      <!-- adide -->
+
+   
+        
+      </div>
+      <!-- detail -->
+      <div class="detail fr">
+        <div class="detail_tab_list">
+          <ul>
+            <li class="current">商品介绍</li>
+            <!-- <li>规格与包装</li>
+              <li>售后保障</li>
+              <li>商品评价（50000）</li>
+              <li>手机社区</li> -->
+          </ul>
+        </div>
+        <div class="detail_tab_con">
+          <div class="item" v-html="goods.fields.goodsdesc">
+          </div>
+          <!-- <div class="item">规格与包装</div> -->
+          <!-- <div class="item">售后保障</div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $(function () {
+      $.get('header.html', function (data) {
+        $("#header").html(data)
+      })
+      $.get('footer.html', function (data) {
+        $("#footer").html(data)
+      })
+    })
+  </script>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        goods: {},
+        num: 1
+      },
+      mounted() {
+        this.getOne()
+
+      },
+      methods: {
+        getOne(id) {
+          //获取当前网址的id
+          var id = location.search.split('=')[1];
+          var url = "http://localhost:8000/getgoodsbyid/";
+          axios.post(url,{'id':id}).then(res => {
+            this.goods = JSON.parse(res.data.data)[0];
+                    }).catch(err => {
+                        console.log(err);
+                    })
+        },
+        addcart() {
+          console.log("添加购物车");
+          //获取当前购物车里的数据
+          var cart = localStorage.getItem('cart');
+          if (!cart) {
+            var cartobj = {};
+            var id = this.goods.id;
+            cartobj = {
+              id: id,
+                num: 1,
+                img:this.goods.fields.image,
+                price:this.goods.fields.price,
+                name:this.goods.fields.name
+            }
+
+            cart = [];
+            cart.push(cartobj);
+
+
+          } else {
+
+
+            var ls = JSON.parse(cart);
+        
+
+            var id = this.goods.id;
+
+            cartobj = ls.find(v => v.id == id)
+            console.log(cartobj);
+            //判断购物车里是否有该商品
+            if (cartobj) {
+              cartobj.num++;
+            }
+
+            else {
+              cartobj = {
+                id: id,
+                num: 1,
+                img:this.goods.fields.image,
+                price:this.goods.fields.price,
+                name:this.goods.fields.name
+              }
+              ls.push(cartobj);
+            }
+
+            cart = ls;
+
+           
+
+          }
+
+          console.log(cart);
+          localStorage.setItem('cart', JSON.stringify(cart));
+            alert("添加成功")
+        }
+      }
+    });
+  </script>
+
+
+  <!-- 底部栏 -->
+  <div id="footer"></div>
+</body>
+<style>
+  .prew_img img {
+    width: 100%;
+    height: 100%;
+  }
+</style>
+</html>

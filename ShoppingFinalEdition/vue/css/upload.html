@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>jQuery & Cropper.js 图片裁剪上传</title>
+    <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- 引入 Cropper.js 及其样式文件 -->
+    <link rel="stylesheet" href="https://fengyuanchen.github.io/cropperjs/css/cropper.min.css">
+    <script src="https://fengyuanchen.github.io/cropperjs/js/cropper.min.js"></script>
+    <style>
+        /* 为裁剪区域设置样式 */
+        .cropper-container {
+            width: 100%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <input type="file" id="image-input">
+    <div id="image-crop" class="cropper-container d-none"></div>
+    <button id="crop-submit">裁剪并上传图片</button>
+</div>
+
+<script>
+$(document).ready(function () {
+    var $imageInput = $('#image-input');
+    var $imageCrop = $('#image-crop');
+    var cropper;
+
+    // 当文件输入框内容改变时（即用户选择图片后）
+    $imageInput.change(function () {
+        var file = this.files[0];
+
+        if (file && /^image\/\w+$/.test(file.type)) {
+            var reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.onload = function () {
+                $imageCrop.removeClass('d-none').attr('src', this.result);
+                initializeCropper();
+            };
+        } else {
+            alert('请选择一个有效的图片文件!');
+        }
+    });
+
+    // 初始化 Cropper.js
+    function initializeCropper() {
+        cropper = new Cropper($imageCrop.get(0), {
+            aspectRatio: 1, // 保持正方形比例
+            viewMode: 1,
+            cropBoxResizable: true,
+            guides: true,
+            dragMode: 'move',
+            zoomOnWheel: true,
+            crop: function () {
+                // 在这里可以实时获取裁剪区域的数据
+            },
+        });
+    }
+
+    // 裁剪并上传图片按钮点击事件处理
+    $('#crop-submit').click(function () {
+        if (!cropper) return;
+
+        // 获取裁剪后的图像数据
+        var croppedCanvas = cropper.getCroppedCanvas({
+            fillColor: '#fff', // 填充颜色
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        // 将 canvas 转换为 Blob 对象以便通过 AJAX 发送
+        croppedCanvas.toBlob(function (blob) {
+            var formData = new FormData();
+            formData.append('croppedImage', blob, 'cropped-image.jpg');
+
+            $.ajax({
+                url: '/api/upload/image', // 替换为你的图片接收API地址
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function (response) {
+                    console.log('图片上传成功：', response);
+                    // 清空裁剪器并隐藏裁剪区域
+                    cropper.destroy();
+                    $imageCrop.addClass('d-none');
+                    $imageCrop.attr('src', '');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('图片上传失败：', textStatus, ', 错误：', errorThrown);
+                },
+            });
+        }, 'image/jpeg');
+    });
+});
+</script>
+
+</body>
+</html>

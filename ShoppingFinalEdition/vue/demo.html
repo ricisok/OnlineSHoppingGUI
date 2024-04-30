@@ -1,0 +1,53 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-01-04 17:52:31
+ * @LastEditTime: 2024-01-07 08:56:50
+ * @LastEditors: lyq
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+<body>
+    
+    <div id="app">
+        <div id="header"></div>
+        <div id="main">
+  
+
+
+            
+        </div>
+        <div id="footer">
+
+        </div>
+  
+    </div>
+    <script>
+            $(function () {
+                $.get('header.html', function (data) {
+                    $("#header").html(data)
+                })
+                $.get('footer.html', function (data) {
+                    $("#footer").html(data)
+                })
+            })
+        </script>
+
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{},
+        methods:{}
+    });
+</script>
+</body>
+
+</html>

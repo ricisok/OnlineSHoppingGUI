@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/shopping.css" />
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+</head>
+
+<body>
+
+  <div class="box" id="header">
+
+  </div>
+  <div id="app">
+    <div class="top">
+      <p class="all">购物车{{title}}</p>
+      <div class="list">
+        <p class="list_name">配送至：</p>
+        <select name="love">
+          <option value="linux">澳门科技大学</option>
+
+          <option value="php">东莞市雅苑村</option>
+
+          <option value="python">东莞市虎门镇</option>
+        </select>
+      </div>
+    </div>
+    <!--  商品信息 -->
+    <div class="information">
+      <div class="information_top">
+        <ul class="information_top_list">
+          <li class="item">
+            <input class="checkbox" type="checkbox" />
+            <p>全选</p>
+          </li>
+          <li class="item">商品</li>
+          <li class="item">单价</li>
+          <li class="item">数量</li>
+          <li class="item">小计</li>
+          <li class="item">操作</li>
+        </ul>
+      </div>
+      <div class="information_content">
+        <ul class="information_content_list" v-for="(item,index) in carts" :key="item.id">
+          <li class="content_item">
+            <input type="checkbox" /><img class="content_img" :src="item.img" />
+          </li>
+
+          <li class="content_item_text">
+            {{item.name}}
+          </li>
+          <li class="content_item"><span>¥ </span>{{item.price}}</li>
+          <li class="content_item_btn">
+            <div class="btn">
+              <button class="btn1" @click="sub(index)">-</button>
+              <p class="text">{{item.num}}</p>
+              <button class="btn2" @click="add(index)">+</button>
+            </div>
+          </li>
+          <li class="content_item"><span>¥ </span>{{item.price*item.num}}</li>
+
+          <li class="content_item_bottom">
+            <a href="javascript:;" @click="remove(index)">删除</a><br />
+          </li>
+        </ul>
+
+      </div>
+      <div class="information_bottom">
+        <div class="information_bottom_left">
+          <div class="left_item">
+            <input class="checkbox" type="checkbox" />
+            <p>全选</p>
+          </div>
+          <a class="s" href="">删除</a>
+          <a class="s" href="">移到我的关注</a>
+        </div>
+        <div class="information_bottom_right">
+          <p>已选择{{totalnum}}件商品</p>
+          <div>
+            <p>总价：￥{{totalprice}}</p>
+            <p>促销：￥00.00</p>
+          </div>
+          <button class="information_btn" @click="topay">去结算</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script>
+    $(function () {
+      $.get('header.html', function (data) {
+        $("#header").html(data)
+      })
+      $.get('footer.html', function (data) {
+        $("#footer").html(data)
+      })
+    })
+  </script>
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        title: "",
+        carts: [],
+        goods: [],
+        total: 0,
+        money: 0,
+        user: {}
+
+      },
+      mounted() {
+        this.loadcart();
+
+
+      },
+
+      //计算属性 计算总价和总数
+
+      computed: {
+        totalprice: function () {
+          let total = 0;
+          this.carts.forEach(item => {
+            total += item.price * item.num;
+          });
+          this.money = total;
+          return total.toFixed(2);
+
+        },
+        totalnum: function () {
+
+          let total = 0;
+          this.carts.forEach(item => {
+            total += item.num;
+          });
+          this.total = total;
+          return total;
+
+        }
+
+
+      },
+      methods: {
+        loadcart() {
+          //获取购物车内的商品列表
+          var ls = localStorage.getItem("cart");
+          if (ls) {
+            this.carts = JSON.parse(ls)
+
+            console.log(this.carts, "cart")
+
+
+
+          }
+        },
+        sub(id) {
+          if (this.carts[id].num == 1) {
+            return
+          }
+
+
+          this.carts[id].num -= 1
+          localStorage.setItem("cart", JSON.stringify(this.carts))
+
+        },
+        add(id) {
+          this.carts[id].num += 1
+          console.log(this.carts, "add")
+          localStorage.setItem("cart", JSON.stringify(this.carts))
+        },
+        remove(id) {
+          this.carts.splice(id, 1)
+          localStorage.setItem("cart", JSON.stringify(this.carts))
+          console.log(this.carts, "remove")
+        },
+
+        topay() {
+
+          //判断用户是否登录
+          let user = localStorage.getItem("user");
+          if (user) {
+            this.user = JSON.parse(user)
+            location.href = "pay.html"
+          } else {
+            location.href = "login.html"
+          }
+
+        }
+      }
+    });
+  </script>
+
+
+  <!-- 底部栏 -->
+  <div id="footer"></div>
+
+
+
+</body>
+
+</html>

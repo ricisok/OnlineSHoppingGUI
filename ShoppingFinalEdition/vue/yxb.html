@@ -1,0 +1,82 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-01-04 17:52:31
+ * @LastEditTime: 2024-01-08 08:58:28
+ * @LastEditors: lyq
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <style>
+    #main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #main img{
+        width: 400px;
+        height: auto;
+    }
+  </style>
+</head>
+<body>
+    
+    <div id="app">
+        <div id="header"></div>
+        <div id="main">
+            <img :src="obj.img" alt="">
+           <h1 style="text-align: center;">{{obj.name}}</h1>
+
+
+           <p><span>开始时间:</span><span>结束时间:</span></p>
+
+           <div v-html="obj.descs"></div>
+            
+        </div>
+        <div id="footer">
+
+        </div>
+  
+    </div>
+    <script>
+            $(function () {
+                $.get('header.html', function (data) {
+                    $("#header").html(data)
+                })
+                $.get('footer.html', function (data) {
+                    $("#footer").html(data)
+                })
+            })
+        </script>
+
+<script>
+    var vm=new Vue({
+        el:'#app',
+        data:{
+            obj:{}
+        },
+        mounted(){
+          this.getData();
+        },
+        methods:{
+            getData(){
+                id=location.search.split('=')[1];
+                axios.get('http://localhost:8888/sysyxb/'+id).then(res=>{
+                    console.log(res.data);
+                    this.obj=res.data.data;
+                })
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>H+ 后台主题UI框架 - 基本表单</title>
+    <meta name="keywords" content="H+后台主题,后台bootstrap框架,会员中心主题,后台HTML,响应式后台">
+    <meta name="description"
+          content="H+是一个完全响应式，基于Bootstrap3最新版本开发的扁平化主题，她采用了主流的左右两栏式布局，使用了Html5+CSS3等现代技术">
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="css/bootstrap.min.css?v=3.3.7" rel="stylesheet">
+    <link href="/static/css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="/static/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="/static/css/animate.css" rel="stylesheet">
+    <link href="/static/css/style.css?v=4.1.0" rel="stylesheet">
+
+     <!-- 引入 jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <style>
+        .preview-container {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #ccc;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: contain;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-7">
+
+        </div>
+        <div class="col-sm-5">
+            <div class="myform">
+                <form method="post" novalidate>
+
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-groups">
+                            <span>{{ field.label }}:</span>{{ field }}<span
+                                style="color: red;">{{ field.errors.0 }}</span>
+                        </div>
+                    {% endfor %}
+
+
+
+
+
+
+                    <div class="form-groups" style="justify-content: space-between">
+                        <button type="submit" style="width: 100px;" class="btn btn-default">保存</button>
+                        <button type="reset" style="width: 100px;" class="btn btn-default">重置</button>
+                    </div>
+                </form>
+            </div>
+        <div>
+
+            <h2>在这里上传商品图片</h2>
+            <form id="uploadForm" enctype="multipart/form-data">
+                <input type="file" name="imageFile" id="file-input" accept="image/*">
+                <div class="preview-container" id="preview"></div>
+                <button type="submit">上传图片</button>
+            </form>
+        </div>
+            <div style="font-size: 22px;color: red;font-weight: bold;margin-top: 50px;">提示:{{ msg }}</div>
+        </div>
+    </div>
+
+
+    <!-- 全局js -->
+    <script src="/static/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/static/js/bootstrap.min.js?v=3.3.7"></script>
+
+    <!-- 自定义js -->
+    <script src="/static/js/content.js?v=1.0.0"></script>
+
+    <!-- iCheck -->
+    <script src="/static/js/plugins/iCheck/icheck.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.i-checks').iCheck({
+                checkboxClass: 'icheckbox_square-green',
+                radioClass: 'iradio_square-green',
+            });
+        });
+
+
+    </script>
+
+<script>
+$(document).ready(function () {
+    // 图片预览
+    $('#file-input').on('change', function () {
+        var input = this;
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#preview').css('background-image', 'url("' + e.target.result + '")');
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    });
+
+    // 表单提交事件，使用 AJAX 进行文件上传
+    $('#uploadForm').submit(function (event) {
+        event.preventDefault(); // 阻止表单默认提交
+
+        var formData = new FormData(this);
+        var fileInput = document.getElementById('file-input');
+        var files = fileInput.files;
+        console.log(files,"要上传的文件")
+
+        if (files.length > 0) {
+            $.ajax({
+                url: 'http://127.0.0.1:8000/uploadfile/', // 替换为你的服务器端处理图片上传的API地址
+                type: 'POST',
+                data: formData,
+                processData: false, // 必须设置为false以正确传输二进制数据
+                contentType: false, // 必须设置为false，让jQuery不要去处理Content-Type
+                success: function (response) {
+                    console.log('图片上传成功:', response);
+                    $("#id_image").val(response.data); // 将服务器端返回的图片路径赋值给隐藏字段
+                    alert('图片已成功上传至服务器!');
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('图片上传失败:', textStatus, ', 错误:', errorThrown);
+                    alert('图片上传过程中发生错误，请重试!');
+                }
+            });
+        } else {
+            alert('请选择要上传的图片!');
+        }
+    });
+});
+</script>
+
+
+    <script type="text/javascript" src="http://tajs.qq.com/stats?sId=9051096" charset="UTF-8"></script>
+    <!--统计代码，可删除-->
+
+</body>
+
+</html>

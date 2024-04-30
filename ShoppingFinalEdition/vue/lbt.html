@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .carousel {
+            width: 100%;
+            overflow: hidden;
+        }
+        .carousel-track {
+            display: flex;
+            animation: slide 5s ease-in-out infinite;
+        }
+        .carousel-item {
+            width: 100%;
+            height: auto;
+            margin-right: -100%;
+        }
+        /* 指示器样式 */
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .indicator-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin: 0 5px;
+        }
+        .indicator-dot.active {
+            background-color: #000;
+        }
+        @keyframes slide {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="carousel">
+        <div class="carousel-track">
+            <img class="carousel-item" src="./images/banner/erji.jpg" alt="Image 1">
+            <img class="carousel-item" src="./images/banner/sanxing.jpg" alt="Image 2">
+            <img class="carousel-item" src="./images/banner/kongtiao.jpg" alt="Image 2">
+           
+        </div>
+        <!-- 指示器部分 -->
+        <div class="carousel-indicators">
+            <div class="indicator-dot active"></div>
+            <div class="indicator-dot"></div>
+            <!-- 更多指示点... -->
+        </div>
+    </div>
+
+    <script>
+        // 假设我们有5张图片
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const indicatorDots = document.querySelectorAll('.indicator-dot');
+        
+        // 自动切换逻辑
+        function startCarousel() {
+            setInterval(() => {
+                let currentSlide = document.querySelector('.carousel-item.active');
+                let nextSlide = currentSlide.nextElementSibling || carouselItems[0];
+
+                // 切换图片
+                currentSlide.classList.remove('active');
+                nextSlide.classList.add('active');
+
+                // 更新指示器状态
+                Array.from(indicatorDots).forEach((dot, index) => {
+                    dot.classList.toggle('active', nextSlide === carouselItems[index]);
+                });
+            }, 3000); // 每隔3秒切换一次
+        }
+
+        // 页面加载后启动轮播
+        window.onload = startCarousel;
+    </script>
+</body>
+</html>

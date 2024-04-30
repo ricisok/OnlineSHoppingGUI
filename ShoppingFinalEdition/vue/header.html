@@ -1,0 +1,150 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-01-09 18:56:31
+ * @LastEditTime: 2024-01-09 18:57:28
+ * @LastEditors: lyq
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老头乐商城</title>
+    <link rel="stylesheet" href="./css/index.css" />
+    <!-- <script type="text/javascript" src="./js/index.js"></script> -->
+    <script>
+      function gotosearch(){
+       var val= $("#searchInput").val();
+       if(val==""){
+         alert("请输入搜索内容");
+         return false;
+       }
+       window.location.href="./search.html?name="+val;
+      }
+     
+$(function(){
+
+  css=localStorage.getItem("css");
+    console.log(css,"页面加载时的字体");
+
+    if(css){
+  
+          document.body.className = css;
+    }
+
+})
+
+      document.addEventListener('DOMContentLoaded', function() {
+    // 页面加载完成后执行的代码
+   
+});
+
+
+           
+    </script>
+    <style>
+      body{
+        font-size: 22px !important;
+      }
+
+
+      .menu ul.submenu {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 100%;
+}
+
+.menu ul.submenu ul.submenu {
+    top: 0;
+    left: 100%;
+}
+
+.menu li:hover > a {
+    background-color: #ddd;
+}
+
+.menu li:hover > ul.submenu {
+    display: block;
+}
+
+/* Style the sub menus */
+.menu ul.submenu {
+    clear: both;
+}
+
+.menu ul.submenu li {
+    clear: both;
+}
+
+/*字体相关*/
+.bigfont-max {
+
+font-size: 40px !important;
+
+}
+.bigfont-large {
+
+font-size: 36px !important;
+
+}
+.bigfont-big {
+
+font-size: 28px !important;
+
+}
+.bigfont-normal {
+
+font-size: 24px !important;
+
+}
+
+.language span{
+font-size: 26px;
+    </style>
+  </head>
+  <body>
+    <!-- 顶部栏 -->
+    <div class="top-nav">
+      <div class="w clearfix">
+        <div class="login">
+          您好，请<a href="./login.html" class="h">登录</a>&nbsp; 免费<a
+            href="register.html"
+            class="h"
+            >注册</a
+          >
+        </div>
+        <ul class="nav-list">
+          <li>
+            <a href="./index.html" class="link">主页</a>
+          </li>
+          <li>
+            <a href="./shopping.html" class="link">购物车</a>
+          </li>
+          <li>
+            <a href="./myorder.html" class="link">我的订单</a>
+          </li>
+          <li>
+            <a href="./about.html" class="link">关于我们</a>
+          </li>
+         
+        </ul>
+      </div>
+    </div>
+    <!--  搜索框 + logo -->
+    <div class="searchWrap">
+      <div class="w">
+        <a href="#" class="logo">老头乐商城</a>
+        <div class="search-box clearfix">
+          <input
+            class="searchInput"
+            type="text"
+            id="searchInput"
+            placeholder="请输入商品名称"
+          />
+          <button class="search-btn" id="btnsearch" onclick="gotosearch()">搜索</button>
+        </div>
+      </div>
+    </div>
+    <div class="w menu clearfix">

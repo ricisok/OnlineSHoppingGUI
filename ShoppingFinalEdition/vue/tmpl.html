@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+
+</head>
+
+<body>
+      <div id="header"></div>
+
+<div id="app">
+
+    <p>年龄：{{web.age}}</p>
+  
+    <button @click="add(1,2)">加1+2</button>
+</div>
+  <div id="footer"></div>
+
+
+</body>
+
+<script>
+        $(function () {
+            $.get('header.html', function (data) {
+                $("#header").html(data)
+            })
+            $.get('footer.html', function (data) {
+                $("#footer").html(data)
+            })
+        })
+    </script>
+<script type="module">
+    import { createApp, reactive, ref, onMounted } from './js/vue.esm-browser.js';
+    createApp({
+        setup() {
+            const web = reactive({
+                name: '测试',
+                age: 0,
+                sex: '',
+                address: '',
+                phone: '',
+                email: ''
+            })
+
+            const list = ref([])
+
+            const loadData = () => {
+                axios.get('http://localhost:8888/sysanimal').then(res => {
+                    console.log(res.data);
+                    if (res.data.code == 200) {
+
+
+                        alert("获取成功")
+
+                    } else {
+                        alert("用户名或密码错误")
+                    }
+
+
+                })
+            }
+            onMounted(() => {
+                console.log('mounted')
+                loadData()
+            })
+
+            return {
+                web,
+                list,
+                loadData,
+                onMounted
+
+            }
+        }
+    }).mount('#app')
+
+
+</script>
+</html>

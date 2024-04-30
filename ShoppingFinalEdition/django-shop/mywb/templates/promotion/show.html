@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <style>
+      .main{
+          margin: auto 0;
+      }
+      .main p {
+          font-size: 20px;
+          margin-top: 20px;
+      }
+    </style>
+ <div style="margin: auto 0" class="main">
+ <p>促销活动</p>
+     <img style="width: 300px;" src="/static/images/p1.jpg ">
+<p>活动名称:{{ cx.title }}</p>
+ <p>活动地址:{{ cx.address }}</p>
+ <p>活动时间:{{ cx.start_time }}-----结束时间{{ cx.end_time }}</p>
+ <p>活动状态:{{ cx.status }}</p>
+
+
+ </div>
+    <button class="btn btn-warning" onclick="joincx({{ cx.id }})">我要参加</button>
+
+    <script>
+      function joincx(id){
+        console.log(id)
+          $.post("/joincx/",{"id":id},function (data){
+              alert("参加成功")
+          })
+
+      }
+    </script>
+{% endblock %}

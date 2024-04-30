@@ -1,0 +1,70 @@
+<!--
+ * @Description: 
+ * @Author: lyq
+ * @Date: 2024-01-04 17:20:53
+ * @LastEditTime: 2024-01-05 15:15:56
+ * @LastEditors: lyq
+-->
+    <!-- 底部栏 -->
+    <footer class="footer">
+        <p class="language">
+          <span class="big-font" id="bigfont-max">特大字体</span>
+          <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <span class="big-font" id="bigfont-large">较大字体</span>
+          <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <span class="big-font" id="bigfont-big">大字体</span>
+          <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <span class="big-font" id="bigfont-normal">正常字体</span>
+        </p>
+        <p class="copyright">
+
+        </p>
+      </footer>
+    </body>
+    <script>
+        // 切换字体大小
+        var bigfont = document.getElementById("bigfont-max");
+        bigfont.onclick = function() {
+          document.body.className = "bigfont-max";
+          bigfont.style.color = "#333";
+          // document.getElementById("bigfont-large").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-big").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-normal").style.color = "#e0e0e0";
+        localStorage.setItem("css", "bigfont-max");
+          console.log("切换字体大小");
+        }
+        var bigfont = document.getElementById("bigfont-large");
+        bigfont.onclick = function() {
+          document.body.className = "bigfont-large";
+          bigfont.style.color = "#333";
+          // document.getElementById("bigfont-max").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-big").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-normal").style.color = "#e0e0e0";
+          localStorage.setItem("css", "bigfont-large");
+          console.log("切换字体大小");
+        }
+        var bigfont = document.getElementById("bigfont-big");
+        bigfont.onclick = function() {
+          document.body.className = "bigfont-big";
+          bigfont.style.color = "#333";
+          // document.getElementById("bigfont-max").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-large").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-normal").style.color = "#e0e0e0";
+          localStorage.setItem("css", "bigfont-big");
+          console.log("切换字体大小");
+        }
+        var bigfont = document.getElementById("bigfont-normal");
+        bigfont.onclick = function() {
+          document.body.className = "bigfont-normal";
+          bigfont.style.color = "#333";
+          // document.getElementById("bigfont-max").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-large").style.color = "#e0e0e0";
+          // document.getElementById("bigfont-big").style.color = "#e0e0e0";
+          localStorage.setItem("css", "bigfont-normal");
+          console.log("切换字体大小");
+        }
+      </script>
+    </script>
+  
+  </html>
+  

@@ -1,0 +1,187 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  color: #666;
+  text-decoration: none;
+}
+/*顶部栏*/
+.top {
+  display: flex;
+  align-items: center;
+  padding-left: 50px;
+}
+.color {
+  color: #e63e3e;
+}
+.top_name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.logo {
+  width: 200px;
+  height: 56px;
+  line-height: 56px;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+.welcome {
+  font-size: 35px;
+  text-align: center;
+  font-weight: bold;
+  font-family: "楷体";
+  margin-left: 20px;
+}
+/*中间内容区*/
+.content {
+  margin-top: 10px;
+  background: url(../images/login.jpg) 50px 15px no-repeat;
+  background-color: #c4893b;
+  width: 100%;
+  height: 505px;
+}
+.content_login {
+  margin-left: 900px;
+  height: 505px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.login-form {
+  width: 400px;
+  height: 400px;
+  border-radius: 20px;
+  background-color: #fff;
+  box-shadow: 2px 6px 9px rgba(0, 0, 0, 0.2);
+}
+form {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+input {
+  width: 278px;
+  height: 18px;
+  margin-bottom: 10px;
+  outline: none;
+  padding: 10px;
+  font-size: 13px;
+  color: #000;
+  border-top: 1px solid #312e3d;
+  border-left: 1px solid #312e3d;
+  border-right: 1px solid #312e3d;
+  border-bottom: 1px solid #56536a;
+  border-radius: 4px;
+  background-color: #f0f0f0;
+}
+.but {
+  width: 300px;
+  min-height: 20px;
+  display: block;
+  background-color: #c4893b;
+  border: 1px solid #c4893b;
+  color: #fff;
+  padding: 9px 14px;
+  font-size: 15px;
+
+  line-height: normal;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.but:hover {
+  color: #c4893b;
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  box-shadow: 1px 1px 1px #ccc;
+}
+.login-type {
+  font-size: 22px;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.login-type span {
+  color: #333;
+}
+
+.login-type span.active {
+  color: #f56600;
+}
+.all-icons {
+  overflow: hidden;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.all-icons span {
+  margin-top: 15px;
+  display: inline-block;
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: url("../images/icons_type.png") no-repeat;
+}
+.login-other-title {
+  color: #e0e0e0;
+  font-size: 13px;
+}
+
+.login-footer {
+  width: 352px;
+  margin-top: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.all-icons a {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.all-icons .qq {
+  background-color: #0288d1;
+  background-position: -18px 0;
+}
+.all-icons .weibo {
+  background-color: #d32f2f;
+  background-position: -37px 0;
+}
+.all-icons .zhifubao {
+  background-color: #0288d1;
+  background-position: -56px 0;
+}
+.all-icons .weixin {
+  background-color: #00d20d;
+  /* margin-left: -8px; */
+  margin-left: -4px;
+  /* width: 24px;
+  height: 24px; */
+  background-position: -83px 0;
+  width: 20px;
+}
+.footer {
+  margin-top: 15px;
+}
+
+.footer > .language {
+  /* margin-top: 10px; */
+  color: #757575;
+  font-size: 12px;
+  text-align: center;
+}
+.copyright {
+  font-size: 12px;
+  color: #757575;
+  margin-top: 5px;
+  text-align: center;
+}

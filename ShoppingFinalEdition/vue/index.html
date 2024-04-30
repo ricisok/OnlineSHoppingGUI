@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>老头乐商城</title>
+  <link rel="stylesheet" href="./css/index.css" />
+  <!-- <script type="text/javascript" src="./js/index.js"></script> -->
+  <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+     
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+  <script>
+
+    function gotosearch() {
+      var val = $("#searchInput").val();
+      if (val == "") {
+        alert("请输入搜索内容");
+        return false;
+      }
+      window.location.href = "./search.html?name=" + val;
+    }
+
+  </script>
+  <style>
+    .cx {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .cx-item {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
+      width: 33%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      /* box-shadow: 0 0 10px #574545; */
+      padding: 30px 0;
+      margin-right: 30px;
+    }
+
+    .cx-item span {
+      margin-top: 5px;
+    }
+
+    .cx-item img {
+      width: 200px;
+      height: 200px;
+    }
+  </style>
+</head>
+
+<body style="font-size: 48px;">
+  <div id="app">
+
+
+    <div id="header"></div>
+    <div class="w menu clearfix">
+
+      <!--  轮播图 -->
+      <div class="banner-wrap" style="margin-left:100px ;width: 100%;">
+        <div class="banner" class="banner">
+          <ul id="swiper">
+            <li class="swiper-item" style="transform: translateX(0px);">
+              <a href="#"><img src="images/banner/1.jpg" alt="" /></a>
+            </li>
+            <li class="swiper-item" style="transform: translateX(-970px);">
+              <a href="#"><img src="images/banner/2.jpg" alt="" /></a>
+            </li>
+            <li class="swiper-item" style="transform: translateX(-1940px);">
+              <a href="#"><img src="images/banner/3.jpg" alt="" /></a>
+            </li>
+          </ul>
+          <div class="prev swiper-arrow">
+
+            <div class="next swiper-arrow">></div>
+            <div id="indicators" class="indicators">
+              <div class="on indicator" data-index="0"></div>
+              <div class="indicator" data-index="1"></div>
+              <div class="indicator" data-index="2"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="likeSale" style="font-size: 18px;margin-bottom: 20px;">热门促销</h3>
+      <div class="cx">
+
+
+        <div class="cx-item" v-for=" item in lbt">
+          <img :src="item.img" alt="" />
+          <span>名称{{item.name}}</span>
+          <span>开始时间:{{item.starttime.substring(0,8)}}</span><span>结束时间:{{item.end.substring(0, 8)}}</span>
+          <a :href="['yxb.html?id='+item.id]">活动详情</a>
+        </div>
+      </div>
+
+
+      <!-- 喜欢专区 -->
+      <div id="guesslike" class="layer w" v-for="item in list">
+        <div class="layer-inner" >
+          <h3 class="likeSale">{{item.fields.name}}</h3>
+          <ul id="gl" class="saleList clearfix">
+            <div  v-for="item2 in goods"  :key="item2.id" >
+               <li class="like-item item" v-if="item2.fields.category==item.pk" >
+            
+
+                <a :href="['./detailed.html?id='+item2.pk]" class="ms-item-lk">
+                <img :src="item2.fields.image" alt="" class="item-img" />
+              </a>
+              <p class="title">{{item2.fields.name}}</p>
+              <div class="line-3">
+                <span class="strong">{{item2.fields.price}}</span>
+                <span class="sell">月销515笔</span>
+              </div>
+              <a href="" class="item-more">发现更多相似的宝贝</a>
+           
+              
+            </li>
+            </div>
+           
+
+          </ul>
+          <!-- <div id="loadMore" class="loadMore"><span>加载更多</span></div> -->
+        </div>
+      </div>
+
+     
+    </div>
+
+  </div>
+
+  <script>
+        $(function () {
+            $.get('header.html', function (data) {
+                $("#header").html(data)
+            })
+            $.get('footer.html', function (data) {
+                $("#footer").html(data)
+            })
+        })
+    </script>
+<script type="module">
+    import { createApp, reactive, ref, onMounted } from './js/vue.esm-browser.js';
+    createApp({
+        setup() {
+            const web = reactive({
+                name: '测试',
+                age: 0,
+                sex: '',
+                address: '',
+                phone: '',
+                email: ''
+            })
+
+            const list = ref([])
+
+            const loadData = () => {
+                axios.post('http://localhost:8000/catesearch/').then(res => {
+                    console.log(res.data);
+                    if (res.data.code == 200) {
+
+                        list.value = JSON.parse(res.data.data);
+                  
+
+                    } else {
+                        alert("用户名或密码错误")
+                    }
+
+
+                })
+            }
+
+            const goods = ref([])
+            const loadGoods = () => {
+                axios.post('http://localhost:8000/goodssearch/').then(res => {
+                    console.log(res.data);
+                    if (res.data.code == 200) {
+
+                        goods.value = JSON.parse(res.data.data);
+                  
+
+
+
+                    } else {
+                        alert("用户名或密码错误")
+                    }
+
+
+                })
+            }
+
+       
+            onMounted(() => {
+                console.log('mounted')
+                loadData(),
+                loadGoods()
+            })
+
+            return {
+                web,
+                list,
+                loadData,
+                onMounted,
+                goods,
+                loadGoods,
+
+            }
+        }
+    }).mount('#app')
+
+
+</script>
+
+  <!-- 底部栏 -->
+  <footer class="footer" id="footer">
+   
+  </footer>
+</body>
+
+</html>

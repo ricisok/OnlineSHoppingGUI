@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>老头乐商城注册界面</title>
+    <link rel="stylesheet" href="./css/register.css" />
+    <script src="./js/register.js"></script>
+    <script src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+      function subdata(){
+
+      $.ajax({
+        url: "http://localhost:8000/apiregister/",
+        type: "post",
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        data: JSON.stringify({
+
+          name: $("#name").val(),
+          password: $("#password").val(),
+          addess: $("#address").val(),
+          phone: $("#phone").val(),
+
+
+
+        }),
+      
+        success: function (data) {
+          if(data.code==200){
+            alert("注册成功")
+            window.location.href="./login.html"
+          }else
+        {
+           alert(data.msg)
+        }
+          // window.location.href="./login.html"
+        },
+      });
+
+      
+
+      }
+       
+    </script>
+  </head>
+  <body>
+    <div class="top">
+      <div class="top_name">
+        <a href="#" title="老头乐商城" class="logo color">老头乐商城</a>
+        <p class="color">LaoTouLe shopping mall</p>
+      </div>
+      <div class="welcome">欢迎注册</div>
+    </div>
+    <div class="content">
+      <div class="content_login">
+        <div class="login-form">
+          <p class="login-type">
+            <span class="active">会员注册</span>
+          </p>
+          <!-- <form method="post" >  
+            <div id="input-item" >
+              <input class="input" type="text"  id="username" value="" placeholder="用户名" onBlur="checkUserName()"></input>  
+              <span class="default" id="nameErr"></span> 
+            </div>   
+            <input class="input" type="date" placeholder="出生日期"></input>  
+            <input class="input" type="password"  id="password" placeholder="密码" ></input>  
+            <input class="input" type="password"   placeholder="再次输入密码" ></input>
+            <input class="input"  type="tel" name="tel" placeholder="手机号码" maxlength="11" pattern="^\d{11}$" placeholder="00000000000"></input>  
+            <button class="but" type="submit"  id="btn_register" onclick="register()">注册</button>  
+            </form>   -->
+          <form action="#" onSubmit="return checkForm()">
+            <div id="form-itemGroup">
+              <input
+                type="text"
+                id="name"
+                placeholder="用户名"
+                maxlength="12"
+                class="userName input"
+                onBlur="checkUserName()"
+                oninput="checkUserName()"
+              />
+              <span class="default" id="nameErr">
+                <img
+                  src="./images/s.png"
+                  alt=""
+                  class="input_name"
+                  id="input_img"
+                />
+                请输入3位以上用户名</span
+              >
+            </div>
+            <div id="form-itemGroup">
+              <input
+                type="password"
+                id="password"
+                name="password"
+                maxlength="8"
+                placeholder="密码"
+                class="userName input"
+                onBlur="checkPassword()"
+                oninput="checkPassword()"
+              />
+              <span class="default" id="passwordErr">
+                <img
+                  src="./images/s.png"
+                  alt=""
+                  class="input_name"
+                  id="input_img"
+                />请输入4到8位的密码</span
+              >
+            </div>
+            <div id="form-itemGroup">
+              <input
+                type="text"
+                maxlength="8"
+                id="address"
+                class="userName input"
+                placeholder="地址"
+           
+              
+              />
+             
+            </div>
+            <div id="form-itemGroup">
+              <input
+                type="text"
+                id="phone"
+                class="userName input"
+                placeholder="手机号码"
+                maxlength="11"
+                onBlur="checkPhone()"
+                oninput="checkPhone()"
+              />
+              <span class="default" id="phoneErr">
+                <img
+                  src="./images/s.png"
+                  alt=""
+                  class="input_name"
+                  id="input_img"
+                />请输入11位手机号码</span
+              >
+            </div>
+            <div>
+              <button type="button" class="but" onclick="subdata()" >
+                注册
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <footer class="footer">
+      <p class="language">
+        <span>简体</span>
+        <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span>繁体</span>
+        <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span>English</span>
+        <span style="color: #e0e0e0">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+        <span>常见问题</span>
+      </p>
+      <p class="copyright">
+
+      </p>
+    </footer>
+  </body>
+</html>

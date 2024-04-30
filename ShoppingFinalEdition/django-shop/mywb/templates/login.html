@@ -1,0 +1,61 @@
+{% extends 'layout_simgle.html' %}
+
+{% block content %}
+    <style>
+        .myform {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin-top: 300px;
+
+        }
+        .form-groups{
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .form-groups span{
+            width: 100px;
+            font-weight: bold;
+            font-size: larger;
+        }
+    </style>
+    <div class="myform">
+        <form method="post" onsubmit=" return false" id="form">
+            {% csrf_token %}
+          <div class="form-groups">
+              <span>账号:</span><input name="name" id="name" class="form-control" />
+          </div>
+            <div class="form-groups">
+              <span>密码:</span><input name="password" class="form-control" />
+          </div>
+
+
+             <div class="form-groups" style="justify-content: space-between">
+               <button id="btnsub" type="button" style="width: 100px;" class="btn btn-default">登录</button>
+               <button type="reset" style="width: 100px;" class="btn btn-default">重置</button>
+          </div>
+        </form>
+    </div>
+
+    <script>
+      $(function (){
+          $("#btnsub").click(function (){
+              $.post("/login/",$("#form").serialize(),function (data){
+                  if(data.code==200){
+                      $.cookie("name",$("#name").val())
+                      window.location.href="/"
+                  }
+                  else{
+                      alert(data.msg)
+                  }
+              })
+
+          })
+
+
+      })
+    </script>
+{% endblock %}
